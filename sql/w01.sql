@@ -3,19 +3,31 @@
 -- 曜日（day）は数字のまま返してよい
 
 -- 区画1：月曜日の授業（時限の早い順）
-
+SELECT * FROM courses
+WHERE day = 1
+ORDER BY period ASC;
 
 -- 区画2：必修科目（科目コードの順）
-
+SELECT * FROM courses
+WHERE required = true 
+ORDER BY code;
 
 -- 区画3：3限以降の2単位の授業（曜日→時限の順）
-
+SELECT * FROM courses
+WHERE credits = 2 -- whereは絞り込み,order byは並び替え
+AND period >= 3
+ORDER BY day , period ASC; -- order byは2行書けない,whereもかけないからandとか使う
 
 -- 区画4：演習の授業（科目コードの順）
-
+SELECT * FROM courses 
+WHERE code IN ( 'MK210' , 'DS230' , 'PG120' , 'PG220' , 'UX250' );
 
 -- 区画5：J棟の授業（金曜以外。曜日→時限の順）
-
+SELECT * FROM courses 
+WHERE day <= 4
+AND room LIKE 'J%'
+ORDER BY day , period;
 
 -- 区画6：担当教員が未定の授業（科目コードの順）
-
+SELECT * FROM courses
+WHERE teacher IS NULL;
